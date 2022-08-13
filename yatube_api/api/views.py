@@ -8,14 +8,16 @@ from rest_framework.response import Response
 from .permissions import IsAuthorOrReadOnly
 from .serializers import (
     CommentSerializer, FollowSerializer, GroupSerializer, PostSerializer)
+from rest_framework.pagination import LimitOffsetPagination
 
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
-    filter_backends = [DjangoFilterBackend]
+    permission_classes = (IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly)
+    filter_backends = (DjangoFilterBackend,)
     filterset_fields = ['group']
+    pagination_class = LimitOffsetPagination
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -37,17 +39,16 @@ class CommentViewSet(viewsets.ModelViewSet):
 class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
-    permission_classes = [IsAuthorOrReadOnly]
+    permission_classes = (IsAuthorOrReadOnly,)
 
     def create(self, request):
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
 class FollowViewSet(viewsets.ModelViewSet):
-    http_method_names = ['get', 'post']
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = (permissions.IsAuthenticated,)
     serializer_class = FollowSerializer
-    filter_backends = [filters.SearchFilter]
+    filter_backends = (filters.SearchFilter,)
     search_fields = ['user__username', 'following__username']
 
     def get_queryset(self):

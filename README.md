@@ -48,8 +48,8 @@ python manage.py runserver
 `GET /api/v1/posts/`
 
 ### Ответ
-
-    {
+`
+{
   "count": 123,
   "next": "http://api.example.org/accounts/?offset=400&limit=100",
   "previous": "http://api.example.org/accounts/?offset=200&limit=100",
@@ -64,7 +64,7 @@ python manage.py runserver
     }
   ]
 }
-
+`
 ## POST-запрос
 
 ### Запрос
@@ -72,15 +72,15 @@ python manage.py runserver
 `POST /api/v1/posts/{post_id}/comments/)/`
 
 ### Ответ
-
-    {
+`
+{
   "id": 0,
   "author": "string",
   "text": "string",
   "created": "2019-08-24T14:15:22Z",
   "post": 0
-    }
-
+}
+`
 ## GET-запрос к несуществующему объекту
 
 ### Запрос
@@ -88,11 +88,11 @@ python manage.py runserver
 `GET /api/v1/groups/{id}/)`
 
 ### Ответ
-
-    {
+`
+{
   "detail": "Страница не найдена."
-    }
-    
+}
+`    
 ## Изменение объекта
 
 ### Запрос
@@ -100,11 +100,12 @@ python manage.py runserver
 `PUT /api/v1/posts/{post_id}/comments/{id}/`
 
 ### Ответ
-
-    {
+`
+{
   "id": 0,
   "author": "string",
   "text": "string",
   "created": "2019-08-24T14:15:22Z",
   "post": 0
 }
+`
